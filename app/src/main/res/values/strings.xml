@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CTUNews</string>
+    <string name="TITLE_HOME">Tin mới nhất</string>
+    <string name="TITLE_SUPPORT_STUDENT">Công tác sinh viên</string>
+    <string name="TITLE_JOB_INFO">Thông tin việc làm</string>
+    <string name="NEWS_URL">https://www.ctu.edu.vn/thong-bao.html?start=</string>
+</resources>
