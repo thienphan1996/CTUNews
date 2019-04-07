@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_padding">5dp</dimen>
+    <dimen name="card_view_radius">30dp</dimen>
+    <dimen name="item_padding">5dp</dimen>
+    <dimen name="item_home_img_radius">50dp</dimen>
+    <dimen name="micro_margin">5dp</dimen>
+    <dimen name="small_margin">10dp</dimen>
+    <dimen name="medium_margin">15dp</dimen>
+    <dimen name="large_margin">20dp</dimen>
+    <dimen name="text_size">11dp</dimen>
+    <dimen name="btn_width">80dp</dimen>
+    <dimen name="micro_radius">10dp</dimen>
+    <dimen name="small_radius">20dp</dimen>
+    <dimen name="medium_radius">30dp</dimen>
+    <dimen name="large_radius">40dp</dimen>
+    <dimen name="big_radius">50dp</dimen>
+</resources>

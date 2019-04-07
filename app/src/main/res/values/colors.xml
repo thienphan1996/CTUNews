@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0091EA</color>
-    <color name="colorPrimaryDark">#00B0FF</color>
+    <color name="colorPrimary">#1565c0</color>
+    <color name="colorPrimaryDark">#003c8f</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorBackgroundHome">#e3f2fd</color>
+    <color name="colorTitleHome">#1565c0</color>
+    <color name="colorInfo">#03a9f4</color>
+    <color name="colorCalendar">#ffc107</color>
+    <color name="colorDelete">#f44336</color>
+    <color name="colorLearning">#4527a0</color>
+    <color name="colorNotification">#e91e63</color>
+    <color name="colorOrganize">#2e7d32</color>
+    <color name="colorRecruitment">#f4511e</color>
+    <color name="colorStudent">#304ffe</color>
 </resources>

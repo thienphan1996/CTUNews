@@ -56,15 +56,12 @@ public class HomeActivity extends AppCompatActivity {
                 switch (model.getId()){
                     case 1:
                         pagerHome.setCurrentItem(0);
-                        actionBar.setTitle(getString(R.string.TITLE_HOME));
                         break;
                     case 2:
                         pagerHome.setCurrentItem(1);
-                        actionBar.setTitle(getString(R.string.TITLE_SUPPORT_STUDENT));
                         break;
                     case 3:
                         pagerHome.setCurrentItem(2);
-                        actionBar.setTitle(getString(R.string.TITLE_JOB_INFO));
                         break;
                     default: break;
                 }
@@ -106,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setUpPager() {
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());
         pagerHome.setAdapter(adapter);
+        pagerHome.setOffscreenPageLimit(1);
     }
 
     private static class HomePagerAdapter extends FragmentPagerAdapter {

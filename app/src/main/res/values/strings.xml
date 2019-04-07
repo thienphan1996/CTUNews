@@ -4,4 +4,13 @@
     <string name="TITLE_SUPPORT_STUDENT">Công tác sinh viên</string>
     <string name="TITLE_JOB_INFO">Thông tin việc làm</string>
     <string name="NEWS_URL">https://www.ctu.edu.vn/thong-bao.html?start=</string>
+    <string name="HTML_NOTIFY">/thong-bao/</string>
+    <string name="NEXT_LABLE">Sau</string>
+    <string name="PREVIOUS_LABLE">Trước</string>
+    <string name="LOADING">Đang tải, vui lòng đợi!</string>
+    <string name="ERRORS">Errors</string>
+    <string name="SUCCESS">Thành công</string>
+    <string name="INTERNET_ERROR">Lỗi mạng!</string>
+    <string name="YES">Yes</string>
+    <string name="NO">No</string>
 </resources>
