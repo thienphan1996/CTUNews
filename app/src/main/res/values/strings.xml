@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">CTUNews</string>
-    <string name="TITLE_HOME">Tin mới nhất</string>
-    <string name="TITLE_SUPPORT_STUDENT">Công tác sinh viên</string>
+    <string name="TITLE_HOME">Thông báo mới nhất</string>
+    <string name="TITLE_SUPPORT_STUDENT">Tin tức - Sự kiện</string>
     <string name="TITLE_JOB_INFO">Thông tin việc làm</string>
-    <string name="NEWS_URL">https://www.ctu.edu.vn/thong-bao.html?start=</string>
+    <string name="CTU_URL">https://www.ctu.edu.vn</string>
+    <string name="NOTIFY_URL">https://www.ctu.edu.vn/thong-bao.html?start=</string>
+    <string name="NEWS_URL">https://www.ctu.edu.vn/tin-tuc.html?start=</string>
     <string name="HTML_NOTIFY">/thong-bao/</string>
     <string name="NEXT_LABLE">Sau</string>
     <string name="PREVIOUS_LABLE">Trước</string>

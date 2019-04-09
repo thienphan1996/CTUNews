@@ -6,7 +6,7 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.thienphan996.ctunews.R;
 import com.thienphan996.ctunews.fragments.HomeFragment;
 import com.thienphan996.ctunews.fragments.JobInfoFragment;
-import com.thienphan996.ctunews.fragments.SupportStudentFragment;
+import com.thienphan996.ctunews.fragments.NewsFragment;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,14 +37,13 @@ public class HomeActivity extends AppCompatActivity {
         navHome = findViewById(R.id.nav_home);
         pagerHome = findViewById(R.id.pager_home);
         actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.TITLE_HOME));
     }
 
     private void onBindViewModels() {
-        navHome.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home_black_24dp));
+        navHome.add(new MeowBottomNavigation.Model(1, R.drawable.ic_notifications_black_24dp));
         navHome.add(new MeowBottomNavigation.Model(2, R.drawable.ic_student));
         navHome.add(new MeowBottomNavigation.Model(3, R.drawable.ic_customer));
-        navHome.show(1,true);
+        navHome.show(2,true);
 
         setUpPager();
     }
@@ -104,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());
         pagerHome.setAdapter(adapter);
         pagerHome.setOffscreenPageLimit(1);
+        pagerHome.setCurrentItem(1);
     }
 
     private static class HomePagerAdapter extends FragmentPagerAdapter {
@@ -125,7 +125,7 @@ public class HomeActivity extends AppCompatActivity {
                 case 0:
                     return HomeFragment.newInstance();
                 case 1:
-                    return SupportStudentFragment.newInstance();
+                    return NewsFragment.newInstance();
                 case 2:
                     return JobInfoFragment.newInstance();
                 default:

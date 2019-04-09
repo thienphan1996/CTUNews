@@ -36,12 +36,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
     RecyclerView rcvHome;
     ArrayList<NewsModel> data;
     HomeAdapter adapter;
-    View rootView;
     MaterialButton btnPrevious, btnNext;
     TextView tvCurrentPage;
     ScrollView scvHome;
@@ -49,16 +48,18 @@ public class HomeFragment extends Fragment {
     NotifyDialog dialog;
     int totalRecord;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        onCreateViews();
-        onCreateEvents();
-        return rootView;
+    protected void onBindViewModels() {
+
     }
 
-    private void onCreateEvents() {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void setActionViews() {
         btnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,13 +81,14 @@ public class HomeFragment extends Fragment {
     }
 
     @SuppressLint("WrongConstant")
-    private void onCreateViews() {
-        rcvHome = rootView.findViewById(R.id.rcv_home);
-        btnPrevious = rootView.findViewById(R.id.btn_home_previous);
-        btnNext = rootView.findViewById(R.id.btn_home_next);
-        tvCurrentPage = rootView.findViewById(R.id.tv_home_current_page);
-        scvHome = rootView.findViewById(R.id.scv_home);
-        relativeLayout = rootView.findViewById(R.id.rtl_home);
+    @Override
+    protected void initViews(View view) {
+        rcvHome = view.findViewById(R.id.rcv_home);
+        btnPrevious = view.findViewById(R.id.btn_home_previous);
+        btnNext = view.findViewById(R.id.btn_home_next);
+        tvCurrentPage = view.findViewById(R.id.tv_home_current_page);
+        scvHome = view.findViewById(R.id.scv_home);
+        relativeLayout = view.findViewById(R.id.rtl_home);
         dialog = new NotifyDialog(getContext());
         data = new ArrayList<>();
         adapter = new HomeAdapter(data, getResources(), new AdapterView.OnItemClickListener() {
@@ -108,6 +110,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getWebsite(int param) {
+        relativeLayout.setVisibility(View.GONE);
         dialog.showProgressDialog();
         final Handler h = new Handler() {
             @Override
@@ -119,22 +122,20 @@ public class HomeFragment extends Fragment {
             }
         };
         h.sendMessageDelayed(new Message(), 30000);
-        final String newsUrl = getString(R.string.NEWS_URL) + param;
+        final String newsUrl = getString(R.string.NOTIFY_URL) + param;
         new AsyncTask<Void, Boolean, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... voids) {
                 try {
                     data.clear();
                     Document doc = Jsoup.connect(newsUrl).get();
-                    Elements links = doc.select("a[href]");
+                    Elements links = doc.select("td.list-title > a[href^=/thong-bao/]");
                     for (Element link : links) {
                         String targetUrl = link.attr("href");
                         String title = link.text();
-                        if (!targetUrl.isEmpty() && targetUrl.length() > 10 && !title.isEmpty() && targetUrl.substring(0,11).equals(getString(R.string.HTML_NOTIFY))){
-                            NewsModel content = new NewsModel(title, targetUrl);
-                            if (!data.contains(content) && data.size() < 15){
-                                data.add(new NewsModel(title, targetUrl));
-                            }
+                        NewsModel content = new NewsModel(title, targetUrl);
+                        if (!data.contains(content) && data.size() < 15){
+                            data.add(new NewsModel(title, targetUrl));
                         }
                     }
                 } catch (IOException e) {
@@ -152,6 +153,7 @@ public class HomeFragment extends Fragment {
                     rcvHome.getLayoutManager().scrollToPosition(0);
                     scvHome.fullScroll(ScrollView.FOCUS_UP);
                     tvCurrentPage.setText("Trang " + (totalRecord / 15 + 1));
+                    relativeLayout.setVisibility(View.VISIBLE);
                     if (totalRecord == 0) btnPrevious.setEnabled(false);
                     else if (totalRecord == 135) btnNext.setEnabled(false);
                     else {

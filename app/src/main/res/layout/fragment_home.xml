@@ -4,68 +4,66 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <com.google.android.material.card.MaterialCardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ScrollView
+        android:layout_height="match_parent"
+        android:id="@+id/scv_home">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scv_home">
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rcv_home"
+                android:scrollbars="vertical"/>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/rcv_home"
-                    android:scrollbars="vertical"/>
-
-                <RelativeLayout
+                android:layout_marginBottom="@dimen/medium_margin"
+                android:orientation="horizontal"
+                android:id="@+id/rtl_home">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_home_previous"
+                    android:layout_width="@dimen/btn_width"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PREVIOUS_LABLE"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_size"
+                    android:layout_margin="@dimen/micro_margin"
+                    app:cornerRadius="@dimen/big_radius"
+                    app:rippleColor="@color/colorBackgroundHome"
+                    android:backgroundTint="@color/colorPrimary"/>
+                <TextView
+                    android:id="@+id/tv_home_current_page"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/medium_margin"
-                    android:orientation="horizontal"
-                    android:id="@+id/rtl_home">
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_home_previous"
-                        android:layout_width="@dimen/btn_width"
-                        android:layout_height="wrap_content"
-                        android:text="@string/PREVIOUS_LABLE"
-                        android:textColor="@android:color/white"
-                        android:layout_centerVertical="true"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/text_size"
-                        app:cornerRadius="@dimen/big_radius"
-                        app:rippleColor="@color/colorBackgroundHome"
-                        android:backgroundTint="@color/colorPrimary"/>
-                    <TextView
-                        android:id="@+id/tv_home_current_page"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/small_margin"
-                        android:gravity="center_horizontal"
-                        android:layout_centerVertical="true"
-                        android:textSize="@dimen/text_size"
-                        android:textColor="@color/colorPrimary"
-                        android:text="Trang 1"
-                        android:layout_toRightOf="@+id/btn_home_previous"
-                        android:layout_toLeftOf="@+id/btn_home_next"/>
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_home_next"
-                        android:layout_width="@dimen/btn_width"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/NEXT_LABLE"
-                        android:layout_centerVertical="true"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/text_size"
-                        android:textColor="@android:color/white"
-                        app:cornerRadius="@dimen/big_radius"
-                        app:rippleColor="@color/colorBackgroundHome"
-                        android:backgroundTint="@color/colorPrimary"/>
-                </RelativeLayout>
-            </LinearLayout>
-        </ScrollView>
-    </com.google.android.material.card.MaterialCardView>
+                    android:padding="@dimen/small_margin"
+                    android:gravity="center_horizontal"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@android:color/white"
+                    android:text="Trang 1"
+                    android:layout_toRightOf="@+id/btn_home_previous"
+                    android:layout_toLeftOf="@+id/btn_home_next"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_home_next"
+                    android:layout_width="@dimen/btn_width"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/NEXT_LABLE"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/micro_margin"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/text_size"
+                    android:textColor="@android:color/white"
+                    app:cornerRadius="@dimen/big_radius"
+                    app:rippleColor="@color/colorBackgroundHome"
+                    android:backgroundTint="@color/colorPrimary"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
