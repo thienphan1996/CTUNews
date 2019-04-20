@@ -1,9 +1,12 @@
 package com.thienphan996.ctunews.views;
 
 import android.os.Bundle;
+import android.view.View;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.thienphan996.ctunews.R;
+import com.thienphan996.ctunews.common.NotifyDialog;
 import com.thienphan996.ctunews.fragments.HomeFragment;
 import com.thienphan996.ctunews.fragments.JobInfoFragment;
 import com.thienphan996.ctunews.fragments.NewsFragment;
@@ -22,6 +25,9 @@ public class HomeActivity extends AppCompatActivity {
     MeowBottomNavigation navHome;
     ViewPager pagerHome;
     ActionBar actionBar;
+    LottieAnimationView internetError;
+    NotifyDialog dialog;
+    HomePagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,9 @@ public class HomeActivity extends AppCompatActivity {
         navHome = findViewById(R.id.nav_home);
         pagerHome = findViewById(R.id.pager_home);
         actionBar = getSupportActionBar();
+        dialog = new NotifyDialog(this);
+        internetError = findViewById(R.id.ani_internet_error);
+        internetError.setVisibility(View.GONE);
     }
 
     private void onBindViewModels() {
@@ -79,14 +88,17 @@ public class HomeActivity extends AppCompatActivity {
                     case 0:
                         navHome.show(1, true);
                         actionBar.setTitle(getString(R.string.TITLE_HOME));
+                        adapter.notifyDataSetChanged();
                         break;
                     case 1:
                         navHome.show(2, true);
                         actionBar.setTitle(getString(R.string.TITLE_SUPPORT_STUDENT));
+                        adapter.notifyDataSetChanged();
                         break;
                     case 2:
                         navHome.show(3, true);
                         actionBar.setTitle(getString(R.string.TITLE_JOB_INFO));
+                        adapter.notifyDataSetChanged();
                         break;
                     default: break;
                 }
@@ -100,7 +112,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setUpPager() {
-        HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());
+        adapter = new HomePagerAdapter(getSupportFragmentManager());
         pagerHome.setAdapter(adapter);
         pagerHome.setOffscreenPageLimit(1);
         pagerHome.setCurrentItem(1);
@@ -139,5 +151,16 @@ public class HomeActivity extends AppCompatActivity {
             return "Page " + position;
         }
 
+    }
+
+    public void showInternetError(){
+        if (!dialog.isShowing()){
+            dialog.showErrorNotInternet();
+        }
+        internetError.setVisibility(View.VISIBLE);
+    }
+
+    public void hideInternetError(){
+        internetError.setVisibility(View.GONE);
     }
 }

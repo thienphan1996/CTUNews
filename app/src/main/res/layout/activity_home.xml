@@ -4,9 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/news_background"
     tools:context=".views.HomeActivity"
     tools:ignore="MissingDefaultResource">
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        app:lottie_rawRes="@raw/gradient_background"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"  />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/ani_internet_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        app:lottie_rawRes="@raw/animation_network_error"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"  />
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

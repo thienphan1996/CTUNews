@@ -1,14 +1,10 @@
 package com.thienphan996.ctunews.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -18,8 +14,6 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.thienphan996.ctunews.R;
 import com.thienphan996.ctunews.adapters.home.HomeAdapter;
-import com.thienphan996.ctunews.common.NotifyDialog;
-import com.thienphan996.ctunews.common.ProgressDialog;
 import com.thienphan996.ctunews.models.NewsModel;
 
 import org.jsoup.Jsoup;
@@ -30,9 +24,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,8 +36,12 @@ public class HomeFragment extends BaseFragment {
     TextView tvCurrentPage;
     ScrollView scvHome;
     RelativeLayout relativeLayout;
-    NotifyDialog dialog;
     int totalRecord;
+
+    @Override
+    protected int getProgressBarId() {
+        return R.id.pro_home;
+    }
 
     @Override
     protected void onBindViewModels() {
@@ -89,7 +84,6 @@ public class HomeFragment extends BaseFragment {
         tvCurrentPage = view.findViewById(R.id.tv_home_current_page);
         scvHome = view.findViewById(R.id.scv_home);
         relativeLayout = view.findViewById(R.id.rtl_home);
-        dialog = new NotifyDialog(getContext());
         data = new ArrayList<>();
         adapter = new HomeAdapter(data, getResources(), new AdapterView.OnItemClickListener() {
             @Override
@@ -102,6 +96,7 @@ public class HomeFragment extends BaseFragment {
         rcvHome.setLayoutManager(layoutManager);
         rcvHome.setAdapter(adapter);
         getWebsite(totalRecord);
+        progressBar.setVisibility(View.GONE);
     }
 
     public static HomeFragment newInstance(){
@@ -111,63 +106,60 @@ public class HomeFragment extends BaseFragment {
 
     private void getWebsite(int param) {
         relativeLayout.setVisibility(View.GONE);
-        dialog.showProgressDialog();
-        final Handler h = new Handler() {
-            @Override
-            public void handleMessage(Message message) {
-                if(dialog.isShowing()){
-                    dialog.dismiss();
-                    dialog.showErrorDialog(getString(R.string.INTERNET_ERROR));
-                }
-            }
-        };
-        h.sendMessageDelayed(new Message(), 30000);
-        final String newsUrl = getString(R.string.NOTIFY_URL) + param;
-        new AsyncTask<Void, Boolean, Boolean>() {
-            @Override
-            protected Boolean doInBackground(Void... voids) {
-                try {
-                    data.clear();
-                    Document doc = Jsoup.connect(newsUrl).get();
-                    Elements links = doc.select("td.list-title > a[href^=/thong-bao/]");
-                    for (Element link : links) {
-                        String targetUrl = link.attr("href");
-                        String title = link.text();
-                        NewsModel content = new NewsModel(title, targetUrl);
-                        if (!data.contains(content) && data.size() < 15){
-                            data.add(new NewsModel(title, targetUrl));
+        data.clear();
+        if (isNetworkConnected()){
+            showProgressBar();
+            adapter.notifyDataSetChanged();
+            final String newsUrl = getString(R.string.NOTIFY_URL) + param;
+            new AsyncTask<Void, Boolean, Boolean>() {
+                @Override
+                protected Boolean doInBackground(Void... voids) {
+                    try {
+                        Document doc = Jsoup.connect(newsUrl).get();
+                        Elements links = doc.select("td.list-title > a[href^=/thong-bao/]");
+                        for (Element link : links) {
+                            String targetUrl = link.attr("href");
+                            String title = link.text();
+                            NewsModel content = new NewsModel(title, targetUrl);
+                            if (!data.contains(content) && data.size() < 15){
+                                data.add(new NewsModel(title, targetUrl));
+                            }
                         }
+                    } catch (IOException e) {
+                        Log.d("Error: " , e.toString());
+                        return false;
                     }
-                } catch (IOException e) {
-                    Log.d("Error: " , e.toString());
-                    return false;
+                    return true;
                 }
-                return true;
-            }
 
-            @Override
-            protected void onPostExecute(Boolean aBoolean) {
-                super.onPostExecute(aBoolean);
-                if (aBoolean){
-                    adapter.notifyDataSetChanged();
-                    rcvHome.getLayoutManager().scrollToPosition(0);
-                    scvHome.fullScroll(ScrollView.FOCUS_UP);
-                    tvCurrentPage.setText("Trang " + (totalRecord / 15 + 1));
-                    relativeLayout.setVisibility(View.VISIBLE);
-                    if (totalRecord == 0) btnPrevious.setEnabled(false);
-                    else if (totalRecord == 135) btnNext.setEnabled(false);
-                    else {
-                        btnNext.setEnabled(true);
-                        btnPrevious.setEnabled(true);
+                @Override
+                protected void onPostExecute(Boolean aBoolean) {
+                    super.onPostExecute(aBoolean);
+                    if (aBoolean){
+                        adapter.notifyDataSetChanged();
+                        rcvHome.getLayoutManager().scrollToPosition(0);
+                        scvHome.fullScroll(ScrollView.FOCUS_UP);
+                        tvCurrentPage.setText("Trang " + (totalRecord / 15 + 1));
+                        relativeLayout.setVisibility(View.VISIBLE);
+                        if (totalRecord == 0) btnPrevious.setEnabled(false);
+                        else if (totalRecord == 135) btnNext.setEnabled(false);
+                        else {
+                            btnNext.setEnabled(true);
+                            btnPrevious.setEnabled(true);
+                        }
+                        hideInternetError();
                     }
-                    dialog.dismiss();
+                    else {
+                        relativeLayout.setVisibility(View.GONE);
+                        showNotInternetDialog();
+                    }
+                    hideProgressBar();
                 }
-                else {
-                    relativeLayout.setVisibility(View.GONE);
-                    dialog.dismiss();
-                    dialog.showErrorDialog(getString(R.string.INTERNET_ERROR));
-                }
-            }
-        }.execute();
+            }.execute();
+        }
+        else {
+            adapter.notifyDataSetChanged();
+            showNotInternetDialog();
+        }
     }
 }

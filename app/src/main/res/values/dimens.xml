@@ -4,6 +4,7 @@
     <dimen name="card_view_radius">30dp</dimen>
     <dimen name="item_padding">5dp</dimen>
     <dimen name="item_home_img_radius">50dp</dimen>
+    <dimen name="minimal_margin">2dp</dimen>
     <dimen name="micro_margin">5dp</dimen>
     <dimen name="small_margin">10dp</dimen>
     <dimen name="medium_margin">15dp</dimen>
@@ -16,4 +17,5 @@
     <dimen name="medium_radius">30dp</dimen>
     <dimen name="large_radius">40dp</dimen>
     <dimen name="big_radius">50dp</dimen>
+    <dimen name="min_height_item">60dp</dimen>
 </resources>
