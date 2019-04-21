@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/lnl_splash"
+    android:background="@android:color/white"
+    tools:context=".views.SplashActivity">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ctu_logo_icon"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CTU_NAME"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/micro_margin"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/pro_home"
+        android:layout_width="196dp"
+        android:padding="0dp"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        app:lottie_rawRes="@raw/animation_book"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"  />
+</LinearLayout>

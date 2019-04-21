@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.thienphan996.ctunews.R;
 import com.thienphan996.ctunews.models.ImageNewsModel;
+import com.thienphan996.ctunews.models.NewsModel;
 
 import java.util.ArrayList;
 
@@ -40,13 +41,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             holder.tvTitle.setText(item.getTitle());
             holder.tvContent.setText(item.getContent());
             holder.imgNews.setImageBitmap(item.getImgBitmap());
+            holder.container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClick.onItemClick(null, v, holder.getAdapterPosition(), 0);
+                }
+            });
         }
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClick.onItemClick(null, v, holder.getAdapterPosition(), 0);
-            }
-        });
     }
 
     @Override

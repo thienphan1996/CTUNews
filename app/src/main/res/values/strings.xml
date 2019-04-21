@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">CTUNews</string>
+    <string name="app_name">CTU News</string>
     <string name="TITLE_HOME">Thông báo mới nhất</string>
     <string name="TITLE_SUPPORT_STUDENT">Tin tức - Sự kiện</string>
     <string name="TITLE_JOB_INFO">Thông tin việc làm</string>
+    <string name="CTU_NAME">Can Tho University</string>
     <string name="CTU_URL">https://www.ctu.edu.vn</string>
     <string name="NOTIFY_URL">https://www.ctu.edu.vn/thong-bao.html?start=</string>
     <string name="NEWS_URL">https://www.ctu.edu.vn/tin-tuc.html?start=</string>
+    <string name="DRIVE_READ_PDF_URL">https://drive.google.com/viewer?url=</string>
+    <string name="JOB_CTU_URL">https://vieclam.ctu.edu.vn</string>
     <string name="HTML_NOTIFY">/thong-bao/</string>
     <string name="NEXT_LABLE">Sau</string>
     <string name="PREVIOUS_LABLE">Trước</string>
@@ -30,4 +33,7 @@
     <string name="AGRICULTURE_URL">https://vieclam.ctu.edu.vn/index.php/moi</string>
     <string name="SOCIETY_URL">https://vieclam.ctu.edu.vn/index.php/su-pham-xa-hoi</string>
     <string name="SEAFOOD_URL">https://vieclam.ctu.edu.vn/index.php/thuy-san</string>
+
+    <!--Intent key-->
+    <string name="NEWS_MODEL">NEWS_MODEL</string>
 </resources>

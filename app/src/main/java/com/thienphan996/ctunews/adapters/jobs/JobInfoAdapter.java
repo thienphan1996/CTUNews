@@ -7,49 +7,34 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.thienphan996.ctunews.R;
-import com.thienphan996.ctunews.models.JobInfoModel;
+import com.thienphan996.ctunews.models.NewsModel;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class JobInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JobInfoAdapter extends RecyclerView.Adapter<JobInfoAdapter.JobInfoViewHolder> {
 
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
-
-    ArrayList<JobInfoModel> data;
+    ArrayList<NewsModel> data;
     AdapterView.OnItemClickListener onClick;
 
-    public JobInfoAdapter(ArrayList<JobInfoModel> data, AdapterView.OnItemClickListener onClick) {
+    public JobInfoAdapter(ArrayList<NewsModel> data, AdapterView.OnItemClickListener onClick) {
         this.data = data;
         this.onClick = onClick;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public JobInfoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        if (viewType == VIEW_TYPE_ITEM){
-            View view = inflater.inflate(R.layout.item_job_info, parent, false);
-            return new JobInfoViewHolder(view);
-        }
-        else {
-            View view = inflater.inflate(R.layout.item_loading, parent, false);
-            return new LoadingViewHolder(view);
-        }
+        View view = inflater.inflate(R.layout.item_job_info, parent, false);
+        return new JobInfoViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof JobInfoViewHolder){
-            populateItemRows((JobInfoViewHolder) holder, position);
-        }
-    }
-
-    private void populateItemRows(final JobInfoViewHolder holder, int position) {
-        if (data.get(position) instanceof JobInfoModel){
+    public void onBindViewHolder(@NonNull final JobInfoViewHolder holder, int position) {
+        if (data.get(position) instanceof NewsModel){
             holder.tvTitle.setText(data.get(position).getTitle());
             holder.container.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -58,11 +43,6 @@ public class JobInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
         }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return data.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     @Override
@@ -77,12 +57,6 @@ public class JobInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(itemView);
             container = itemView;
             tvTitle = itemView.findViewById(R.id.item_job_info_tv_title);
-        }
-    }
-
-    private class LoadingViewHolder extends RecyclerView.ViewHolder {
-        public LoadingViewHolder(@NonNull View itemView) {
-            super(itemView);
         }
     }
 }

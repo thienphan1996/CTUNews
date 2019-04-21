@@ -1,15 +1,21 @@
 package com.thienphan996.ctunews.fragments;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 
+import com.google.gson.Gson;
 import com.thienphan996.ctunews.R;
 import com.thienphan996.ctunews.adapters.news.NewsAdapter;
 import com.thienphan996.ctunews.models.ImageNewsModel;
+import com.thienphan996.ctunews.views.DetailActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,13 +26,19 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 
-public class NewsFragment extends BaseFragment {
+public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     ArrayList<ImageNewsModel> data;
     NewsAdapter adapter;
     RecyclerView rcvNews;
+    int currentPage = 0;
+    SwipeRefreshLayout swipeRefreshNews;
 
     public static NewsFragment newInstance(){
         NewsFragment newsFragment = new NewsFragment();
@@ -48,18 +60,32 @@ public class NewsFragment extends BaseFragment {
         return R.layout.fragment_news;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void setActionViews() {
-        getWebsite(5);
+        showProgressBar();
+        getWebsite(currentPage);
+        swipeRefreshNews.setOnRefreshListener(this);
+        swipeRefreshNews.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
     }
 
     @Override
     protected void initViews(View view) {
         data = new ArrayList<>();
+        swipeRefreshNews = view.findViewById(R.id.swipe_news);
         adapter = new NewsAdapter(data, new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                data.get(position).setActionMode(2);
+                Gson gson = new Gson();
+                String json = gson.toJson(data.get(position));
+                intent.putExtra(getString(R.string.NEWS_MODEL), json);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
         rcvNews = view.findViewById(R.id.rcv_news);
@@ -69,8 +95,8 @@ public class NewsFragment extends BaseFragment {
 
     private void getWebsite(int param) {
         data.clear();
+        adapter.notifyDataSetChanged();
         if (isNetworkConnected()){
-            showProgressBar();
             final String newsUrl = getString(R.string.NEWS_URL) + param;
             final String homeUrl = getString(R.string.CTU_URL);
             new AsyncTask<Void, Boolean, Boolean>() {
@@ -109,12 +135,19 @@ public class NewsFragment extends BaseFragment {
                         showNotInternetDialog();
                     }
                     hideProgressBar();
+                    swipeRefreshNews.setRefreshing(false);
                 }
             }.execute();
         }
         else {
-            adapter.notifyDataSetChanged();
+            swipeRefreshNews.setRefreshing(false);
             showNotInternetDialog();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshNews.setRefreshing(true);
+        getWebsite(currentPage);
     }
 }

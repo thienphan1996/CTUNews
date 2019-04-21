@@ -8,9 +8,7 @@ public class ImageNewsModel {
     private String targetUrl;
     private String content;
     private Bitmap imgBitmap;
-
-    public ImageNewsModel() {
-    }
+    private int actionMode;
 
     public ImageNewsModel(String title, String imgUrl, String targetUrl, String content, Bitmap imgBitmap) {
         this.title = title;
@@ -18,6 +16,17 @@ public class ImageNewsModel {
         this.targetUrl = targetUrl;
         this.content = content;
         this.imgBitmap = imgBitmap;
+    }
+
+    public ImageNewsModel() {
+    }
+
+    public int getActionMode() {
+        return actionMode;
+    }
+
+    public void setActionMode(int actionMode) {
+        this.actionMode = actionMode;
     }
 
     public Bitmap getImgBitmap() {

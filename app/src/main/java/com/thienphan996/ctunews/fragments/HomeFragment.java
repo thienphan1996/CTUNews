@@ -1,8 +1,10 @@
 package com.thienphan996.ctunews.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 import com.thienphan996.ctunews.R;
 import com.thienphan996.ctunews.adapters.home.HomeAdapter;
+import com.thienphan996.ctunews.models.ImageNewsModel;
 import com.thienphan996.ctunews.models.NewsModel;
+import com.thienphan996.ctunews.views.DetailActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,18 +29,20 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView rcvHome;
     ArrayList<NewsModel> data;
     HomeAdapter adapter;
     MaterialButton btnPrevious, btnNext;
     TextView tvCurrentPage;
-    ScrollView scvHome;
     RelativeLayout relativeLayout;
+    SwipeRefreshLayout swipeRefreshHome;
     int totalRecord;
 
     @Override
@@ -82,19 +89,38 @@ public class HomeFragment extends BaseFragment {
         btnPrevious = view.findViewById(R.id.btn_home_previous);
         btnNext = view.findViewById(R.id.btn_home_next);
         tvCurrentPage = view.findViewById(R.id.tv_home_current_page);
-        scvHome = view.findViewById(R.id.scv_home);
         relativeLayout = view.findViewById(R.id.rtl_home);
+
         data = new ArrayList<>();
         adapter = new HomeAdapter(data, getResources(), new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "Current position: " + position, Toast.LENGTH_SHORT).show();
+                if (data.get(position) instanceof NewsModel){
+                    ImageNewsModel imageNewsModel = new ImageNewsModel();
+                    imageNewsModel.setActionMode(1);
+                    imageNewsModel.setTitle(data.get(position).getTitle());
+                    imageNewsModel.setTargetUrl(getString(R.string.CTU_URL) + data.get(position).getTargetUrl());
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(imageNewsModel);
+                    intent.putExtra(getString(R.string.NEWS_MODEL), json);
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                }
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rcvHome.setLayoutManager(layoutManager);
         rcvHome.setAdapter(adapter);
+
+        swipeRefreshHome = view.findViewById(R.id.swipe_home);
+        swipeRefreshHome.setOnRefreshListener(this);
+        swipeRefreshHome.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
+
         getWebsite(totalRecord);
         progressBar.setVisibility(View.GONE);
     }
@@ -107,9 +133,9 @@ public class HomeFragment extends BaseFragment {
     private void getWebsite(int param) {
         relativeLayout.setVisibility(View.GONE);
         data.clear();
+        adapter.notifyDataSetChanged();
         if (isNetworkConnected()){
             showProgressBar();
-            adapter.notifyDataSetChanged();
             final String newsUrl = getString(R.string.NOTIFY_URL) + param;
             new AsyncTask<Void, Boolean, Boolean>() {
                 @Override
@@ -138,7 +164,6 @@ public class HomeFragment extends BaseFragment {
                     if (aBoolean){
                         adapter.notifyDataSetChanged();
                         rcvHome.getLayoutManager().scrollToPosition(0);
-                        scvHome.fullScroll(ScrollView.FOCUS_UP);
                         tvCurrentPage.setText("Trang " + (totalRecord / 15 + 1));
                         relativeLayout.setVisibility(View.VISIBLE);
                         if (totalRecord == 0) btnPrevious.setEnabled(false);
@@ -153,13 +178,19 @@ public class HomeFragment extends BaseFragment {
                         relativeLayout.setVisibility(View.GONE);
                         showNotInternetDialog();
                     }
+                    swipeRefreshHome.setRefreshing(false);
                     hideProgressBar();
                 }
             }.execute();
         }
         else {
-            adapter.notifyDataSetChanged();
+            swipeRefreshHome.setRefreshing(false);
             showNotInternetDialog();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getWebsite(totalRecord);
     }
 }

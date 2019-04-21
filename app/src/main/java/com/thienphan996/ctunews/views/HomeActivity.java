@@ -1,6 +1,10 @@
 package com.thienphan996.ctunews.views;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -11,6 +15,7 @@ import com.thienphan996.ctunews.fragments.HomeFragment;
 import com.thienphan996.ctunews.fragments.JobInfoFragment;
 import com.thienphan996.ctunews.fragments.NewsFragment;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -29,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     NotifyDialog dialog;
     HomePagerAdapter adapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,13 @@ public class HomeActivity extends AppCompatActivity {
         onCreateViews();
         onBindViewModels();
         onCreateEvents();
+        setupWindowAnimations();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        Fade fade = (Fade) TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
+        getWindow().setExitTransition(fade);
     }
 
     private void onCreateViews() {

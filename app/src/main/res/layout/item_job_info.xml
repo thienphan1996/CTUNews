@@ -13,7 +13,6 @@
         android:orientation="horizontal"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:clickable="true"
         android:minHeight="@dimen/min_height_item"
         android:weightSum="1">
         <TextView

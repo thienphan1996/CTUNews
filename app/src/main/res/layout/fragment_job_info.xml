@@ -45,23 +45,23 @@
                 android:layout_height="wrap_content"
                 android:text="@string/SEAFOOD"/>
         </com.google.android.material.tabs.TabLayout>
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical">
-            <LinearLayout
+            android:paddingBottom="@dimen/large_margin"
+            android:orientation="vertical">
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="@dimen/large_margin"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:id="@+id/swipe_job_info">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_job_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scrollbars="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-            </LinearLayout>
-        </ScrollView>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
     </LinearLayout>
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/pro_job_info"
