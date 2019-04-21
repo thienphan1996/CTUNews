@@ -15,8 +15,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.webkit.WebView;
@@ -191,7 +194,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setColorTitle() {
-        int cx = viewTitle.getLeft();
+        int cx = viewTitle.getRight();
         int cy = viewTitle.getTop();
         int finalRadius = Math.max(viewTitle.getWidth(), viewTitle.getHeight());
 
@@ -203,8 +206,10 @@ public class DetailActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setupWindowAnimations() {
-        Explode explode = (Explode) TransitionInflater.from(this).inflateTransition(R.transition.activity_explode);
-        getWindow().setEnterTransition(explode);
+        Slide slide = new Slide();
+        slide.setDuration(300);
+        slide.setSlideEdge(Gravity.RIGHT);
+        getWindow().setEnterTransition(slide);
     }
 
     private boolean isNetworkConnected() {
