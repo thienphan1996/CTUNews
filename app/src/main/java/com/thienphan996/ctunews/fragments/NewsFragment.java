@@ -142,6 +142,7 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         else {
             swipeRefreshNews.setRefreshing(false);
             showNotInternetDialog();
+            hideProgressBar();
         }
     }
 
