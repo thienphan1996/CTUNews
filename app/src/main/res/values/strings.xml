@@ -13,11 +13,12 @@
     <string name="NEXT_LABLE">Sau</string>
     <string name="PREVIOUS_LABLE">Trước</string>
     <string name="LOADING">Đang tải, vui lòng đợi!</string>
-    <string name="ERRORS">Errors</string>
+    <string name="ERRORS">Lỗi</string>
     <string name="SUCCESS">Thành công</string>
-    <string name="INTERNET_ERROR">Lỗi mạng!</string>
+    <string name="INTERNET_ERROR">Không có kết nối internet!</string>
     <string name="YES">Yes</string>
     <string name="NO">No</string>
+    <string name="OK">OK</string>
 
     <!--Title job infomation-->
     <string name="SCIENCE">Khoa học - Kỹ thuật</string>
