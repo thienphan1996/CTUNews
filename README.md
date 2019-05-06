@@ -1,2 +1,2 @@
 # CTUNews
-Android application support CTU student follow news from school.
+Android application support CTU students follow news from school.
