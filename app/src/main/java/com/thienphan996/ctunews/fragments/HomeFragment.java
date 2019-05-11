@@ -52,7 +52,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void onBindViewModels() {
-
+        getWebsite(totalRecord);
     }
 
     @Override
@@ -121,7 +121,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
 
-        getWebsite(totalRecord);
         progressBar.setVisibility(View.GONE);
     }
 
@@ -134,8 +133,8 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         relativeLayout.setVisibility(View.GONE);
         data.clear();
         adapter.notifyDataSetChanged();
+        showProgressBar();
         if (isNetworkConnected()){
-            showProgressBar();
             final String newsUrl = getString(R.string.NOTIFY_URL) + param;
             new AsyncTask<Void, Boolean, Boolean>() {
                 @Override
@@ -186,6 +185,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         else {
             swipeRefreshHome.setRefreshing(false);
             showNotInternetDialog();
+            hideProgressBar();
         }
     }
 

@@ -52,7 +52,7 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void onBindViewModels() {
-
+        getWebsite(currentPage);
     }
 
     @Override
@@ -64,7 +64,6 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     protected void setActionViews() {
         showProgressBar();
-        getWebsite(currentPage);
         swipeRefreshNews.setOnRefreshListener(this);
         swipeRefreshNews.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
