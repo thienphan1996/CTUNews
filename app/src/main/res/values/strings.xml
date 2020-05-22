@@ -24,14 +24,14 @@
     <string name="SCIENCE">Khoa học - Kỹ thuật</string>
     <string name="TECHNOLOGY">Công nghệ thông tin</string>
     <string name="ECONOMY">Kinh tế - Luật</string>
-    <string name="AGRICULTURE">Môi trường - Nông nghiệp</string>
+    <string name="AGRICULTURE">Lĩnh vực khác</string>
     <string name="SOCIETY">Sư phạm - Xã hội</string>
     <string name="SEAFOOD">Thủy sản</string>
     <!--URL job infomation-->
     <string name="SCIENCE_URL">https://vieclam.ctu.edu.vn/index.php/cong-nghe-ky-thuat</string>
     <string name="TECHNOLOGY_URL">https://vieclam.ctu.edu.vn/index.php/cong-nghe-thong-tin</string>
     <string name="ECONOMY_URL">https://vieclam.ctu.edu.vn/index.php/kinh-te-luat</string>
-    <string name="AGRICULTURE_URL">https://vieclam.ctu.edu.vn/index.php/moi</string>
+    <string name="AGRICULTURE_URL">https://vieclam.ctu.edu.vn/index.php/linh-vuc-khac</string>
     <string name="SOCIETY_URL">https://vieclam.ctu.edu.vn/index.php/su-pham-xa-hoi</string>
     <string name="SEAFOOD_URL">https://vieclam.ctu.edu.vn/index.php/thuy-san</string>
 

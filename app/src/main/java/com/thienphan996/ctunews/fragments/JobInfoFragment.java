@@ -34,9 +34,9 @@ public class JobInfoFragment extends BaseFragment implements SwipeRefreshLayout.
     private static final int SCIENCE = 0;
     private static final int TECHNOLOGY = 1;
     private static final int ECONOMY = 2;
-    private static final int AGRICULTURE = 3;
+    private static final int SEAFOOD = 3;
     private static final int SOCIETY = 4;
-    private static final int SEAFOOD = 5;
+    private static final int AGRICULTURE = 5;
 
     TabLayout tabLayout;
     RecyclerView rcvJobInfo;
@@ -95,14 +95,14 @@ public class JobInfoFragment extends BaseFragment implements SwipeRefreshLayout.
                     case ECONOMY:
                         getWebsite(getString(R.string.ECONOMY_URL));
                         break;
-                    case AGRICULTURE:
-                        getWebsite(getString(R.string.AGRICULTURE_URL));
-                        break;
                     case SOCIETY:
                         getWebsite(getString(R.string.SOCIETY_URL));
                         break;
                     case SEAFOOD:
                         getWebsite(getString(R.string.SEAFOOD_URL));
+                        break;
+                    case AGRICULTURE:
+                        getWebsite(getString(R.string.AGRICULTURE_URL));
                         break;
                 }
             }
